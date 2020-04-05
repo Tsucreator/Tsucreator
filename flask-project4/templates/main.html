@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!--最初にゲームが完了しているか、いないかの分岐-->
+{% if winner == False and draw == False %}
+
+    <!--ここはプレーヤーチェンジに対応した表示-->
+    {% if switchPlayer1 == True and switchPlayer2 == False %}
+    <h1>Player1の番</h1>
+    {% elif switchPlayer1 == False and switchPlayer2 == True %}
+    <h1>Player2の番</h1>
+    {% endif %}
+
+    <!--○×ゲームの表作成-->
+    {% for i in range(0,9,3) %}
+    <a href="/edit/{{num[i]}}">{{num[i]}}</a> | <a href="/edit/{{num[i+1]}}">{{num[i+1]}}</a> | <a href="/edit/{{num[i+2]}}">{{num[i+2]}}</a> |<br>ーーー<br>
+    {% endfor %}
+
+    <!--ゲームが引き分けた時の動作-->
+{% elif winner == False and draw == True %}
+<h1>ひきわけ〜〜〜〜</h1>
+<a href="/init">もう一回勝負する</a>
+
+<!-- ゲームが終わった時の動作-->
+{% elif winner == True %}
+    {% if switchPlayer1 == True %}
+    <h1>Player2勝利！</h1>
+    {% elif switchPlayer2 == True %}
+    <h1>Player1勝利！</h1>
+    {% endif %}
+    <a href="/init">もう一回勝負する</a>
+{% endif %}
+{% endblock %}
